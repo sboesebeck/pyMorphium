@@ -27,3 +27,9 @@ class Morphium:
         print(type(m))
         col=self.database["testcol"];
         col.insert_one(m)
+
+    
+
+class Query:
+    def __init__(self):
+        print("Create query")
