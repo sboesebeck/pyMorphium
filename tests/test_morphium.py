@@ -1,6 +1,6 @@
 import unittest
 
-import morphium
+import Morphium
 from mconfig import Config
 
 class TestMorphium(unittest.TestCase):
@@ -10,19 +10,19 @@ class TestMorphium(unittest.TestCase):
         :return:
         """
         cfg=Config(["localhost:27017"])
-        m=morphium.Morphium(cfg)
+        m=Morphium.Morphium(cfg)
         # all ok here
         cfg=[]
         exception=False
         try:
-          m=morphium.Morphium(cfg)
+          m=Morphium.Morphium(cfg)
         except Exception:
             exception=True
         self.assertTrue(exception)
 
     def test_save(self):
         cfg=Config(["localhost:27017"])
-        m=morphium.Morphium(cfg)
+        m=Morphium.Morphium(cfg)
         tst=TestEntity("test",5)
         m.save(tst)
 
