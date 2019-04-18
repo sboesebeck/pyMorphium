@@ -1,7 +1,10 @@
-import pymongo
-import mconfig
-import jsonpickle
 import json
+
+import jsonpickle
+import pymongo
+
+import mconfig
+
 
 class Morphium:
     def __init__(self, config):
@@ -25,8 +28,17 @@ class Morphium:
         m=dec.decode(js)
         print("m.value=", m["value"])
         print(type(m))
-        col=self.database["testcol"];
+        col = self.database["testcol"]
         col.insert_one(m)
+
+    def watch(self, listener):
+        with self.__client.watch([{'$match': {'operationType': 'insert'}}]) as stream:
+            for change in stream:
+                print(change)
+                listener.incomingChange(change)
+
+
+
 
     
 
