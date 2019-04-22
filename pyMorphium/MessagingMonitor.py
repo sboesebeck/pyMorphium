@@ -51,10 +51,10 @@ def main(argv):
                     print("sender     : ", fd['sender'])
                     if (fd['locked_by']=='ALL'):
                         print("Message is not exclusive")
-                    elif ('recipient' in fd):
+                    if ('recipient' in fd):
                         print("recipient  : ", fd['recipient'])
                     if ('in_answer_to' in fd):
-                        print("anser to : ",fd['in_answer_to'])
+                        print("answer to  : ",fd['in_answer_to'])
                 elif (insert_change['operationType']=='update'):
                     upd=insert_change['updateDescription']['updatedFields']
                     ks=upd.keys()
