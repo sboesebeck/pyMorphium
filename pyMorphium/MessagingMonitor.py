@@ -11,8 +11,10 @@ def main(argv):
     dbname = 'test'
     collection = 'msg'
     usePolling=False
+    useFilters=False
+    filters={}
     try:
-        opts, args = getopt.getopt(argv,"?h:d:c:p",["host=","database=","collection="])
+        opts, args = getopt.getopt(argv,"?h:d:c:p",["host=","database=","collection=,filter="])
     except getopt.GetoptError:
         print('MessagingMonitor.py -h <host> -d <dbname> -c <collection> -p')
         sys.exit(2)
@@ -26,6 +28,10 @@ def main(argv):
             dbname = arg
         elif opt in ("-c", "--collection"):
             collection = arg
+        elif opt == "--filter":
+            flt=arg.split(":")
+            filters[flt[0]]=flt[1]
+            useFilters=True
         elif opt == "-p":
             usePolling = True
 
@@ -41,29 +47,64 @@ def main(argv):
     client = MongoClient(host,27017)
     db=client[dbname]
     col=db[collection]
+    num=0
 
     try:
         with col.watch([{'$match': {'ns.db': dbname,'ns.coll':collection}}],'updateLookup') as stream:
             for insert_change in stream:
-                if (insert_change['operationType']=='insert'):
+                num+=1
+                name=""
+                msgType=""
+                msgId=""
+                sender=""
+                recipient=""
+                exclusive=""
+                inAnswerTo=""
+                fd=None
+                if ("fullDocument" in insert_change):
                     fd=insert_change['fullDocument']
-                    print("new message: ", fd['name'],fd['_id'])
-                    print("sender     : ", fd['sender'])
-                    if (fd['locked_by']=='ALL'):
-                        print("Message is not exclusive")
+                    msgId=str(fd['_id'])
+                    sender=fd['sender']
+                    name=fd['name']
                     if ('recipient' in fd):
-                        print("recipient  : ", fd['recipient'])
+                       recipient=fd['recipient']
                     if ('in_answer_to' in fd):
-                        print("answer to  : ",fd['in_answer_to'])
+                        inAnswerTo=str(fd['in_answer_to'])
+                    if (fd['locked_by']=='ALL'):
+                        exclusive="not exclusive"
+                    else:
+                        exclusive="exclusive"
+
+                if (insert_change['operationType']=='insert'):
+                    msgType="new Message"
+                elif (insert_change['operationType']=='delete'):
+                    msgType="msg removed"
                 elif (insert_change['operationType']=='update'):
+                    msgType="msg update"
                     upd=insert_change['updateDescription']['updatedFields']
                     ks=upd.keys()
                     for k in ks:
                         if (str(k).startswith("processed_by")):
-                            print("Message was processed by "+upd[k])
+                            msgType="processed by "+upd[k]
                             break
-                print(insert_change)
+                        elif (str(k).startWith("locked_by")):
+                            msgType="locked by "+upd[k]
+                            break
+                if useFilters:
+                    for k in filters:
+                        if (k in fd):
+                            if (fd[k] == filters[k]):
+                                found=True
+                        elif (k in insert_change):
+                            if (insert_change[k]==filters[k]):
+                                found=True
+                    if not found:
+                        continue
+                print('{:<50} {:<35} {:<25} {:<38} {:<38} {:<10} {:<20}'.format("msgType","name","msgId","sender","recipient","exclusive","inAnswerTo"))
+                print('{:<50} {:<35} {:<25} {:<38} {:<38} {:<10} {:<20}'.format(msgType,name,msgId,sender,recipient,exclusive,inAnswerTo))
+                #print(insert_change)
                 print("")
+
     except pymongo.errors.PyMongoError as e:
         # The ChangeStream encountered an unrecoverable error or the
         # resume attempt failed to recreate the cursor.
