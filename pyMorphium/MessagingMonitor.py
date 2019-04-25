@@ -3,6 +3,7 @@ import pymongo
 import getopt
 import sys
 import logging
+import time
 
 
 
@@ -17,8 +18,10 @@ def main(argv):
     types="nlpda"
     stats=False
     modulo=10
+    messages={}
+    answerTimes=False
     try:
-        opts, args = getopt.getopt(argv,"?sh:m:d:c:a:pt:",["stats","types=","additional=","host=","database=","collection=","filter="])
+        opts, args = getopt.getopt(argv,"?sAh:m:d:c:a:pt:",["answertimes","stats","types=","additional=","host=","database=","collection=","filter="])
     except getopt.GetoptError as e:
         print(e)
         print('MessagingMonitor.py -s|--stats -h|--host=<host> -d|database=<dbname> -c|collection=<collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
@@ -35,6 +38,8 @@ def main(argv):
             collection = arg
         elif opt in ("-t", "--types"):
             types=arg
+        elif opt in ("-A", "--answerTimes"):
+            answerTimes=True
         elif opt in ("-s", "--stats"):
             stats=True
         elif opt in ("-a", "--additional"):
@@ -61,7 +66,8 @@ def main(argv):
     db=client[dbname]
     col=db[collection]
     num=0
-
+    answers=0
+    answerTimesSum=0
     try:
         with col.watch([{'$match': {'ns.db': dbname,'ns.coll':collection}}],'updateLookup') as stream:
             for insert_change in stream:
@@ -91,11 +97,17 @@ def main(argv):
                         exclusive="false"
                     else:
                         exclusive="true"
-
                 if (insert_change['operationType']=='insert'):
                     if 'n' not in types:
                        continue
                     msgType="new Message"
+                    if inAnswerTo:
+                        answers=answers+1 
+                        if inAnswerTo in messages:
+                           dur=time.time()*1000-messages[inAnswerTo]
+                           answerTimesSum+=dur
+                    elif answerTimes:
+                        messages[msgId]=int(round(time.time()*1000))
                 elif (insert_change['operationType']=='delete'):
                     if 'd' not in types:
                        continue
@@ -129,16 +141,28 @@ def main(argv):
                    print()
                    if stats:
                        total=col.count_documents({})
-                       answers=col.count_documents({"in_answer_to":{"$ne":None}})
+                       ans=col.count_documents({"in_answer_to":{"$ne":None}})
                        unprocessed=col.count_documents({"processed_by":{"$size":1}})
-                       print('Stats: Total Messages {}, answers {}, unprocessed {}'.format(total,answers,unprocessed))
-                   print('{:>5} - {:<50} {:<45} {:<25} {:<25} {:<38} {:<38} {:<10} {:<20} - {}'.format("number","msgType","name","msg","msgId","sender","recipient","exclusive","inAnswerTo",additional))
+                       print('Stats: Total Messages {}, answers {}, unprocessed {}'.format(total,ans,unprocessed))
+                       if answerTimes:
+                           if answers==0: 
+                               avgAnswerTime=0
+                           else:
+                               avgAnswerTime=answerTimesSum/answers
+                           print('      answers registered {} - sum answering time {} - Avg. Answer time {} - {} unanswered messages'.format(answers,answerTimesSum,avgAnswerTime,len(messages)))
+                   print('{:>15} {:>5} - {:<50} {:<45} {:<25} {:<25} {:<38} {:<38} {:<6} {:<25} - {}'.format("time", "num#","msgType","name","msg","msgId","sender","recipient","excl","inAnswerTo",additional))
                 add=[]
                 if fd!=None:
                    for k in additional:
                        if (k in fd):
                            add.append(fd[k])
-                print('{:>5} - {:<50} {:<45} {:<25} {:<25} {:<38} {:<38} {:<10} {:<20} - {}'.format(num,msgType,name,msg,msgId,sender,recipient,exclusive,inAnswerTo,add))
+                if answerTimes:
+                   if inAnswerTo in messages:
+                      dur=int(round(time.time()*1000))-messages[inAnswerTo]
+                      messages.pop(inAnswerTo,None)
+                      inAnswerTo=inAnswerTo+" after "+str(dur)+"ms"
+                      
+                print('{:>15} {:>5} - {:<50} {:<45} {:<25} {:<25} {:<38} {:<38} {:<6} {:<25} - {}'.format(int(round(time.time()*1000)), num,msgType,name,msg,msgId,sender,recipient,exclusive,inAnswerTo,add))
                 #print(insert_change)
                 #print("")
 
