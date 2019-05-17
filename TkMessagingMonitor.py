@@ -64,6 +64,9 @@ for y in range(rowsToShow+5):
 for x in range(columnCount):
     Grid.columnconfigure(root,x,weight=1)
 
+Grid.columnconfigure(root,5,weight=0)
+Grid.columnconfigure(root,5,weight=2)
+
 Label(root,text="").grid(row=0,column=0,columnspan=columnCount)
 title=Label(root,text="Messaging Monitor: %s:%i %s/%s"%(host,port,dbname,collection),relief=RAISED,bg="#a0a0f0").grid(row=1,column=0,columnspan=columnCount,pady=5,sticky=W+E)
 
@@ -162,6 +165,7 @@ def msgLoop():
                            dur=time.time()*1000-messages[inAnswerTo]
                            answerTimesSum+=dur
                     messages[msgId]=int(round(time.time()*1000))
+                    num=num+1
                 elif (insert_change['operationType']=='delete'):
                     if 'd' not in types:
                        continue
@@ -191,7 +195,6 @@ def msgLoop():
                     if not found:
                         continue
                 total=col.count_documents({})
-                num=num+1
                 ans=col.count_documents({"in_answer_to":{"$ne":None}})
                 unprocessed=col.count_documents({"processed_by":{"$size":1}})
                 #print('Stats: Total Messages {}, answers {}, unprocessed {}'.format(total,ans,unprocessed))
@@ -236,7 +239,7 @@ def msgLoop():
                 l[0][0].config(text=msgType,bg=bg)
                 l[0][1].config(text=name,bg=bg)
                 l[0][2].config(text=msgId,bg=bg)
-                if msgId!='none':
+                if msgId!='none' and msgId!='':
                    l[0][2].config(fg="#"+msgId[-6:])
                 else:
                    l[0][2].config(fg="#000000")
