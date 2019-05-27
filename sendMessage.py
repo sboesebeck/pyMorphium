@@ -47,13 +47,11 @@ def main(argv):
                                     "database=", "collection=", "dontwait", "quiet", "filter="])
     except getopt.GetoptError as e:
         print(e)
-        print(
-            'MessagingMonitor.py -s|--stats -h|--host=<host> -d|database=<dbname> -c|collection=<collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
+        print('MessagingMonitor.py -s|--stats -h|--host=<host> -d|database=<dbname> -c|collection=<collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-?':
-            print(
-                'MessagingMonitor.py -h <host> -d <dbname> -c <collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
+            print('MessagingMonitor.py -h <host> -d <dbname> -c <collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
             sys.exit()
         elif opt in ("-h", "--host"):
             host = arg

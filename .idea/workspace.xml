@@ -26,9 +26,9 @@
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5663792b-1213-4960-9bb4-11e7fa026b2d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sendMessage.py" afterDir="false" />
+    <list default="true" id="5663792b-1213-4960-9bb4-11e7fa026b2d" name="Default Changelist" comment="simple message sending">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sendMessage.py" beforeDir="false" afterPath="$PROJECT_DIR$/sendMessage.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,13 +64,13 @@
         <entry file="file://$PROJECT_DIR$/pyMorphium/MessagingMonitor.py">
           <provider selected="true" editor-type-id="live-pycharm">
             <state>
-              <first_editor relative-caret-position="1240">
-                <caret line="171" column="50" lean-forward="true" selection-start-line="167" selection-end-line="171" selection-end-column="50" />
+              <first_editor relative-caret-position="2490">
+                <caret line="171" column="50" selection-start-line="167" selection-end-line="171" selection-end-column="50" />
                 <folding>
                   <element signature="e#0#31#0" expanded="true" />
                 </folding>
               </first_editor>
-              <second_editor relative-caret-position="-105" />
+              <second_editor relative-caret-position="-75" />
             </state>
           </provider>
         </entry>
@@ -79,13 +79,10 @@
         <entry file="file://$PROJECT_DIR$/sendMessage.py">
           <provider selected="true" editor-type-id="live-pycharm">
             <state>
-              <first_editor relative-caret-position="713">
-                <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
-                <folding>
-                  <element signature="e#0#31#0" expanded="true" />
-                </folding>
+              <first_editor relative-caret-position="660">
+                <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
               </first_editor>
-              <second_editor relative-caret-position="-105" />
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -93,7 +90,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_PLUGINS_DIR$/python/helpers/typeshed/stdlib/2and3/datetime.pyi">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
+            <state relative-caret-position="2820">
               <caret line="193" column="12" selection-start-line="193" selection-start-column="12" selection-end-line="193" selection-end-column="12" />
             </state>
           </provider>
@@ -178,6 +175,11 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="GermanGeek" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -198,7 +200,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="83" />
     <option name="y" value="24" />
     <option name="width" value="1657" />
@@ -267,8 +269,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -281,7 +283,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -463,7 +465,8 @@
       <workItem from="1555615587579" duration="505000" />
       <workItem from="1555959783064" duration="4309000" />
       <workItem from="1556001423436" duration="2229000" />
-      <workItem from="1558697273544" duration="9173000" />
+      <workItem from="1558697273544" duration="9265000" />
+      <workItem from="1558955560679" duration="169000" />
     </task>
     <task id="LOCAL-00001" summary="experimenting with messaging">
       <created>1553027774419</created>
@@ -500,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556003958105</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="simple message sending">
+      <created>1558708671383</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1558708671383</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -536,20 +546,19 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26782000" />
+    <option name="totallyTimeSpent" value="27043000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4990403" visible="true" weight="0.25456712" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49927008" visible="true" weight="0.25655282" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
-      <window_info id="Favorites" order="4" sideWeight="0.5009597" side_tool="true" visible="true" weight="0.25456712" />
+      <window_info id="Favorites" order="4" sideWeight="0.5007299" side_tool="true" weight="0.25456712" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946752" visible="true" weight="0.23941606" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946752" weight="0.23941606" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -578,10 +587,16 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="experimenting with messaging" />
     <MESSAGE value="basic messaging monitor" />
     <MESSAGE value="experimenting with filters" />
-    <option name="LAST_COMMIT_MESSAGE" value="experimenting with filters" />
+    <MESSAGE value="simple message sending" />
+    <option name="LAST_COMMIT_MESSAGE" value="simple message sending" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -632,6 +647,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pyMorphium/MessagingMonitor.py">
+      <provider selected="true" editor-type-id="live-pycharm">
+        <state>
+          <first_editor relative-caret-position="2490">
+            <caret line="171" column="50" selection-start-line="167" selection-end-line="171" selection-end-column="50" />
+            <folding>
+              <element signature="e#0#31#0" expanded="true" />
+            </folding>
+          </first_editor>
+          <second_editor relative-caret-position="-75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_PLUGINS_DIR$/python/helpers/typeshed/stdlib/2and3/datetime.pyi">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2820">
+          <caret line="193" column="12" selection-start-line="193" selection-start-column="12" selection-end-line="193" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_PLUGINS_DIR$/python/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="live-pycharm">
+        <state>
+          <first_editor relative-caret-position="255">
+            <caret line="17" selection-start-line="17" selection-end-line="17" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pyMorphium/Messaging.py">
       <provider selected="true" editor-type-id="live-pycharm">
         <state>
@@ -674,46 +719,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyMorphium/MessagingMonitor.py">
-      <provider selected="true" editor-type-id="live-pycharm">
-        <state>
-          <first_editor relative-caret-position="1240">
-            <caret line="171" column="50" lean-forward="true" selection-start-line="167" selection-end-line="171" selection-end-column="50" />
-            <folding>
-              <element signature="e#0#31#0" expanded="true" />
-            </folding>
-          </first_editor>
-          <second_editor relative-caret-position="-105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_PLUGINS_DIR$/python/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="live-pycharm">
-        <state>
-          <first_editor relative-caret-position="255">
-            <caret line="17" selection-start-line="17" selection-end-line="17" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_PLUGINS_DIR$/python/helpers/typeshed/stdlib/2and3/datetime.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="193" column="12" selection-start-line="193" selection-start-column="12" selection-end-line="193" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sendMessage.py">
       <provider selected="true" editor-type-id="live-pycharm">
         <state>
-          <first_editor relative-caret-position="713">
-            <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
-            <folding>
-              <element signature="e#0#31#0" expanded="true" />
-            </folding>
+          <first_editor relative-caret-position="660">
+            <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
           </first_editor>
-          <second_editor relative-caret-position="-105" />
+          <second_editor />
         </state>
       </provider>
     </entry>
