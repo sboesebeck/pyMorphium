@@ -3,7 +3,7 @@ import getopt
 import logging
 import sys
 from datetime import datetime
-from time import time
+from time import time, sleep
 
 import pymongo
 from bson.objectid import ObjectId
@@ -39,12 +39,15 @@ def main(argv):
     col = None
     quiet = False
     listeners = []
+    minAnswers = 0
+    maxAnswers = 0
+
     global answers
     global start
     try:
         opts, args = getopt.getopt(argv, "?h:p:d:c:w:n:m:t:v:",
                                    ["port=", "map=", "value=", "name=", "message=", "waittime=", "waitnum=", "host=",
-                                    "database=", "collection=", "dontwait", "quiet", "filter="])
+                                    "database=", "collection=", "dontwait", "quiet", "filter=", "minimum=", "maximum="])
     except getopt.GetoptError as e:
         print(e)
         print('MessagingMonitor.py -s|--stats -h|--host=<host> -d|database=<dbname> -c|collection=<collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
@@ -75,6 +78,10 @@ def main(argv):
             wait = False
         elif opt == "--quiet":
             quiet = True
+        elif opt == "--minimum":
+            minAnswers = int(arg)
+        elif opt == "--maximum":
+            maxAnswers = int(arg)
         elif opt == "--map":
             mv = arg.split(":")
             mapValue[mv[0]] = mv[1]
@@ -112,9 +119,11 @@ def main(argv):
             break
     client.close()
     if not quiet:
+        sleep(1.0)
         dur = time() - start
         print("%d Answers took %f sec" % (answers[message["_id"]], dur))
-
+    if minAnswers > 0 and answers[message["_id"]] < minAnswers or maxAnswers > 0 and answers[message["_id"]] > maxAnswers:
+        exit(1)
 
 def msgLoop(col, listeners, dbname, collection):
     global start
@@ -182,7 +191,7 @@ def onMessage(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerT
     global start
     if (msgType == "new Message"):
         if inAnswerTo != None and inAnswerTo != '':
-            if ObjectId(inAnswerTo) in answers:
+            if not quiet and ObjectId(inAnswerTo) in answers:
                 print("Answer #%d to sent message after %f sec" % (answers[ObjectId(inAnswerTo)] + 1, (time() - start)))
                 print("  name        : " + name)
                 print("  msg         : " + msg)
