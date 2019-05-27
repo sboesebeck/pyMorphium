@@ -22,6 +22,7 @@ global start
 def main(argv):
     global message
     global quiet
+    global answers
     msg = "ping"
     name = "ping"
     value = "value"
@@ -86,14 +87,14 @@ def main(argv):
             mv = arg.split(":")
             mapValue[mv[0]] = mv[1]
 
-    listeners.append(onMessage)
+    listeners.append(on_message)
     client = MongoClient(host, port)
     db = client[dbname]
     col = db[collection]
 
     # msgLoop()
 
-    _thread.start_new_thread(msgLoop, (col, listeners, dbname, collection))
+    _thread.start_new_thread(msg_loop, (col, listeners, dbname, collection))
 
     message = {}
     message["name"] = name
@@ -126,7 +127,7 @@ def main(argv):
         exit(1)
 
 
-def msgLoop(col, listeners, dbname, collection):
+def msg_loop(col, listeners, dbname, collection):
     global start
     global quiet
     global message
@@ -145,19 +146,19 @@ def msgLoop(col, listeners, dbname, collection):
                 msg = ""
                 if "fullDocument" in insert_change:
                     fd = insert_change['fullDocument']
-                    if fd == None:
+                    if fd is None:
                         continue
                     msgId = str(fd['_id'])
                     if "sender" in fd:
                         sender = fd['sender']
                     name = fd['name']
-                    if ('msg' in fd):
+                    if 'msg' in fd:
                         msg = fd['msg']
-                    if ('recipient' in fd):
+                    if 'recipient' in fd:
                         recipient = fd['recipient']
-                    if ('in_answer_to' in fd):
+                    if 'in_answer_to' in fd:
                         inAnswerTo = str(fd['in_answer_to'])
-                    if ('locked_by' in fd and fd['locked_by'] == 'ALL'):
+                    if 'locked_by' in fd and fd['locked_by'] == 'ALL':
                         exclusive = "false"
                     else:
                         exclusive = "true"
@@ -187,7 +188,7 @@ def msgLoop(col, listeners, dbname, collection):
         logging.error('error during processing', e)
 
 
-def onMessage(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerTo, fd):
+def on_message(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerTo, fd):
     # print("in listener", msgType)
     global start
     if msgType == "new Message":
