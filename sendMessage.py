@@ -122,8 +122,9 @@ def main(argv):
         sleep(1.0)
         dur = time() - start
         print("%d Answers took %f sec" % (answers[message["_id"]], dur))
-    if minAnswers > 0 and answers[message["_id"]] < minAnswers or maxAnswers > 0 and answers[message["_id"]] > maxAnswers:
+    if minAnswers > 0 and answers[message["_id"]] < minAnswers or 0 < maxAnswers < answers[message["_id"]]:
         exit(1)
+
 
 def msgLoop(col, listeners, dbname, collection):
     global start
@@ -142,7 +143,7 @@ def msgLoop(col, listeners, dbname, collection):
                 inAnswerTo = ""
                 fd = None
                 msg = ""
-                if ("fullDocument" in insert_change):
+                if "fullDocument" in insert_change:
                     fd = insert_change['fullDocument']
                     if fd == None:
                         continue
@@ -160,19 +161,19 @@ def msgLoop(col, listeners, dbname, collection):
                         exclusive = "false"
                     else:
                         exclusive = "true"
-                if (insert_change['operationType'] == 'insert'):
+                if insert_change['operationType'] == 'insert':
                     msgType = "new Message"
-                elif (insert_change['operationType'] == 'delete'):
+                elif insert_change['operationType'] == 'delete':
                     msgType = "msg removed"
-                elif (insert_change['operationType'] == 'update'):
+                elif insert_change['operationType'] == 'update':
                     msgType = "msg update"
                     upd = insert_change['updateDescription']['updatedFields']
                     ks = upd.keys()
                     for k in ks:
-                        if (str(k).startswith("processed_by")):
+                        if str(k).startswith("processed_by"):
                             msgType = "processed by " + str(upd[k])
                             break
-                        elif (str(k).startswith("locked_by")):
+                        elif str(k).startswith("locked_by"):
                             msgType = "locked by " + str(upd[k])
                             break
                 if inAnswerTo == None:
@@ -189,8 +190,8 @@ def msgLoop(col, listeners, dbname, collection):
 def onMessage(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerTo, fd):
     # print("in listener", msgType)
     global start
-    if (msgType == "new Message"):
-        if inAnswerTo != None and inAnswerTo != '':
+    if msgType == "new Message":
+        if inAnswerTo is not None and inAnswerTo != '':
             if not quiet and ObjectId(inAnswerTo) in answers:
                 print("Answer #%d to sent message after %f sec" % (answers[ObjectId(inAnswerTo)] + 1, (time() - start)))
                 print("  name        : " + name)

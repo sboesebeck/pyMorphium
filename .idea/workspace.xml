@@ -26,7 +26,7 @@
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5663792b-1213-4960-9bb4-11e7fa026b2d" name="Default Changelist" comment="simple message sending">
+    <list default="true" id="5663792b-1213-4960-9bb4-11e7fa026b2d" name="Default Changelist" comment="min / max number of answers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sendMessage.py" beforeDir="false" afterPath="$PROJECT_DIR$/sendMessage.py" afterDir="false" />
     </list>
@@ -79,10 +79,13 @@
         <entry file="file://$PROJECT_DIR$/sendMessage.py">
           <provider selected="true" editor-type-id="live-pycharm">
             <state>
-              <first_editor relative-caret-position="660">
-                <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+              <first_editor relative-caret-position="495">
+                <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="127" />
+                <folding>
+                  <element signature="e#0#14#0" expanded="true" />
+                </folding>
               </first_editor>
-              <second_editor />
+              <second_editor relative-caret-position="-105" />
             </state>
           </provider>
         </entry>
@@ -353,7 +356,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sendMessage.py" />
-      <option name="PARAMETERS" value="-h jef-db1.dev.genios.de -d jef -c mmsg_devqueue -n 1 -m ping -n 1 -t ping -v &quot;testtest&quot;" />
+      <option name="PARAMETERS" value="-h jef-db1.dev.genios.de -d jef -c mmsg_devqueue -n 1 -m ping -n 1 -t ping -v &quot;testtest&quot; --minimum 1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -466,7 +469,7 @@
       <workItem from="1555959783064" duration="4309000" />
       <workItem from="1556001423436" duration="2229000" />
       <workItem from="1558697273544" duration="9265000" />
-      <workItem from="1558955560679" duration="169000" />
+      <workItem from="1558955560679" duration="789000" />
     </task>
     <task id="LOCAL-00001" summary="experimenting with messaging">
       <created>1553027774419</created>
@@ -510,7 +513,21 @@
       <option name="project" value="LOCAL" />
       <updated>1558708671383</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixing code style">
+      <created>1558955754626</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1558955754626</updated>
+    </task>
+    <task id="LOCAL-00008" summary="min / max number of answers">
+      <created>1558956209652</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1558956209652</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -546,10 +563,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27043000" />
+    <option name="totallyTimeSpent" value="27663000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49927008" visible="true" weight="0.25655282" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -558,7 +576,7 @@
       <window_info id="Favorites" order="4" sideWeight="0.5007299" side_tool="true" weight="0.25456712" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946752" weight="0.23941606" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946752" visible="true" weight="0.23941606" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -593,7 +611,9 @@
     <MESSAGE value="basic messaging monitor" />
     <MESSAGE value="experimenting with filters" />
     <MESSAGE value="simple message sending" />
-    <option name="LAST_COMMIT_MESSAGE" value="simple message sending" />
+    <MESSAGE value="fixing code style" />
+    <MESSAGE value="min / max number of answers" />
+    <option name="LAST_COMMIT_MESSAGE" value="min / max number of answers" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -607,7 +627,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pyMorphium$sendMessage.coverage" NAME="sendMessage Coverage Results" MODIFIED="1558708595729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyMorphium$sendMessage.coverage" NAME="sendMessage Coverage Results" MODIFIED="1558956178491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyMorphium$MessagingMonitor.coverage" NAME="MessagingMonitor Coverage Results" MODIFIED="1556003878206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyMorphium" />
   </component>
   <component name="debuggerHistoryManager">
@@ -722,10 +742,13 @@
     <entry file="file://$PROJECT_DIR$/sendMessage.py">
       <provider selected="true" editor-type-id="live-pycharm">
         <state>
-          <first_editor relative-caret-position="660">
-            <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+          <first_editor relative-caret-position="495">
+            <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="127" />
+            <folding>
+              <element signature="e#0#14#0" expanded="true" />
+            </folding>
           </first_editor>
-          <second_editor />
+          <second_editor relative-caret-position="-105" />
         </state>
       </provider>
     </entry>
