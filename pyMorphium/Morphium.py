@@ -14,18 +14,18 @@ class Morphium:
         else:
             raise Exception("not of type config")
         if config.replicaset is not None:
-            self.__client=pymongo.MongoClient(config.host_seed,config.replicaset)
+            self.__client = pymongo.MongoClient(config.host_seed, config.replicaset)
         else:
-            self.__client=pymongo.MongoClient(config.host_seed)
+            self.__client = pymongo.MongoClient(config.host_seed)
 
-        self.database=self.__client[config.database]
+        self.database = self.__client[config.database]
 
-    def save(self,obj):
+    def save(self, obj):
         print("Saving instance")
-        js=jsonpickle.encode(obj)
+        js = jsonpickle.encode(obj)
         print("JS is ", type(js))
-        dec=json.JSONDecoder()
-        m=dec.decode(js)
+        dec = json.JSONDecoder()
+        m = dec.decode(js)
         print("m.value=", m["value"])
         print(type(m))
         col = self.database["testcol"]
@@ -37,10 +37,10 @@ class Morphium:
                 print(change)
                 listener.incomingChange(change)
 
+    def get_collection(self,dbname,colname):
+        db=self.__client[dbname]
+        return db[colname]
 
-
-
-    
 
 class Query:
     def __init__(self):
