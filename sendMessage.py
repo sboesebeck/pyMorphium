@@ -17,12 +17,17 @@ answers = {}
 global message
 global quiet
 global start
+global delete
 
 
 def main(argv):
     global message
     global quiet
     global answers
+    global delete
+    global client
+    global db
+    global col
     msg = "ping"
     name = "ping"
     value = "value"
@@ -42,13 +47,15 @@ def main(argv):
     listeners = []
     minAnswers = 0
     maxAnswers = 0
+    delete = False
 
     global answers
     global start
+
     try:
         opts, args = getopt.getopt(argv, "?h:p:d:c:w:n:m:t:v:",
                                    ["port=", "map=", "value=", "name=", "message=", "waittime=", "waitnum=", "host=",
-                                    "database=", "collection=", "dontwait", "quiet", "filter=", "minimum=", "maximum="])
+                                    "database=", "collection=", "dontwait", "quiet", "filter=", "minimum=", "maximum=", "delete"])
     except getopt.GetoptError as e:
         print(e)
         print('MessagingMonitor.py -s|--stats -h|--host=<host> -d|database=<dbname> -c|collection=<collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
@@ -83,6 +90,8 @@ def main(argv):
             minAnswers = int(arg)
         elif opt == "--maximum":
             maxAnswers = int(arg)
+        elif opt == "--delete":
+            delete = True
         elif opt == "--map":
             mv = arg.split(":")
             mapValue[mv[0]] = mv[1]
@@ -191,8 +200,12 @@ def msg_loop(col, listeners, dbname, collection):
 def on_message(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerTo, fd):
     # print("in listener", msgType)
     global start
+    global delete
+    global col
     if msgType == "new Message":
         if inAnswerTo is not None and inAnswerTo != '':
+            if delete:
+                col.delete_one({"_id": fd["_id"]})
             if not quiet and ObjectId(inAnswerTo) in answers:
                 print("Answer #%d to sent message after %f sec" % (answers[ObjectId(inAnswerTo)] + 1, (time() - start)))
                 print("  name        : " + name)

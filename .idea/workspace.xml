@@ -26,7 +26,7 @@
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5663792b-1213-4960-9bb4-11e7fa026b2d" name="Default Changelist" comment="min / max number of answers">
+    <list default="true" id="5663792b-1213-4960-9bb4-11e7fa026b2d" name="Default Changelist" comment="deletin received answers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sendMessage.py" beforeDir="false" afterPath="$PROJECT_DIR$/sendMessage.py" afterDir="false" />
     </list>
@@ -49,28 +49,16 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyMorphium/Morphium.py">
-          <provider selected="true" editor-type-id="live-pycharm">
-            <state>
-              <first_editor relative-caret-position="135">
-                <caret line="14" column="49" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyMorphium/MessagingMonitor.py">
           <provider selected="true" editor-type-id="live-pycharm">
             <state>
-              <first_editor relative-caret-position="2490">
+              <first_editor relative-caret-position="2565">
                 <caret line="171" column="50" selection-start-line="167" selection-end-line="171" selection-end-column="50" />
                 <folding>
                   <element signature="e#0#31#0" expanded="true" />
                 </folding>
               </first_editor>
-              <second_editor relative-caret-position="-75" />
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -79,13 +67,34 @@
         <entry file="file://$PROJECT_DIR$/sendMessage.py">
           <provider selected="true" editor-type-id="live-pycharm">
             <state>
-              <first_editor relative-caret-position="495">
-                <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="127" />
-                <folding>
-                  <element signature="e#0#14#0" expanded="true" />
-                </folding>
+              <first_editor relative-caret-position="556">
+                <caret line="207" column="50" selection-start-line="207" selection-start-column="50" selection-end-line="207" selection-end-column="50" />
               </first_editor>
               <second_editor relative-caret-position="-105" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/pymongo/mongo_client.py">
+          <provider selected="true" editor-type-id="live-pycharm">
+            <state>
+              <first_editor relative-caret-position="459">
+                <caret line="243" column="42" selection-start-line="243" selection-start-column="32" selection-end-line="243" selection-end-column="42" />
+              </first_editor>
+              <second_editor relative-caret-position="-105" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/pymongo/__init__.py">
+          <provider selected="true" editor-type-id="live-pycharm">
+            <state>
+              <first_editor relative-caret-position="1245">
+                <caret line="97" column="22" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="22" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -149,13 +158,13 @@
         <entry file="file://$PROJECT_DIR$/tests/test_morphium.py">
           <provider selected="true" editor-type-id="live-pycharm">
             <state>
-              <first_editor relative-caret-position="390">
+              <first_editor relative-caret-position="435">
                 <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
                 <folding>
                   <element signature="e#0#15#0" expanded="true" />
                 </folding>
               </first_editor>
-              <second_editor relative-caret-position="-45" />
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -175,6 +184,9 @@
       <find>answers[</find>
       <find>a</find>
       <find>5ce7e0ca55d69ad9faf44d12</find>
+      <find>error</find>
+      <find>col</find>
+      <find>collection</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -203,7 +215,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="x" value="83" />
     <option name="y" value="24" />
     <option name="width" value="1657" />
@@ -216,6 +228,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -259,6 +272,13 @@
               <item name="pyMorphium" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="&lt; Python 3.7 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="python3.7" type="462c0819:PsiDirectoryNode" />
+              <item name="pymongo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pyMorphium" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="Typeshed Stubs" type="9c07c3ae:PyTypeShedNode" />
             </path>
             <path>
@@ -273,7 +293,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -356,7 +375,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sendMessage.py" />
-      <option name="PARAMETERS" value="-h jef-db1.dev.genios.de -d jef -c mmsg_devqueue -n 1 -m ping -n 1 -t ping -v &quot;testtest&quot; --minimum 1" />
+      <option name="PARAMETERS" value="-h jef-db1.dev.genios.de -d jef -c mmsg_devqueue -n 1 -m ping -n 1 -t ping -v &quot;testtest&quot;  --delete --minimum 1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -469,7 +488,8 @@
       <workItem from="1555959783064" duration="4309000" />
       <workItem from="1556001423436" duration="2229000" />
       <workItem from="1558697273544" duration="9265000" />
-      <workItem from="1558955560679" duration="789000" />
+      <workItem from="1558955560679" duration="1843000" />
+      <workItem from="1559025388198" duration="425000" />
     </task>
     <task id="LOCAL-00001" summary="experimenting with messaging">
       <created>1553027774419</created>
@@ -527,7 +547,21 @@
       <option name="project" value="LOCAL" />
       <updated>1558956209652</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixing code style">
+      <created>1558956362833</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1558956362833</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fixing code style">
+      <created>1558956533012</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1558956533012</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -563,20 +597,19 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27663000" />
+    <option name="totallyTimeSpent" value="29142000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="2560" height="1440" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49927008" visible="true" weight="0.25655282" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49927008" visible="true" weight="0.2585385" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" sideWeight="0.5007299" side_tool="true" weight="0.25456712" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946752" visible="true" weight="0.23941606" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.329927" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946752" weight="0.23941606" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -590,7 +623,7 @@
       <window_info anchor="bottom" id="Terminal" order="13" />
       <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5005325" side_tool="true" weight="0.32871288" />
       <window_info anchor="bottom" id="Version Control" order="15" weight="0.32970297" />
-      <window_info anchor="bottom" id="Messages" order="16" weight="0.329927" />
+      <window_info active="true" anchor="bottom" id="Messages" order="16" visible="true" weight="0.329927" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -611,9 +644,10 @@
     <MESSAGE value="basic messaging monitor" />
     <MESSAGE value="experimenting with filters" />
     <MESSAGE value="simple message sending" />
-    <MESSAGE value="fixing code style" />
     <MESSAGE value="min / max number of answers" />
-    <option name="LAST_COMMIT_MESSAGE" value="min / max number of answers" />
+    <MESSAGE value="fixing code style" />
+    <MESSAGE value="deletin received answers" />
+    <option name="LAST_COMMIT_MESSAGE" value="deletin received answers" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -627,7 +661,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pyMorphium$sendMessage.coverage" NAME="sendMessage Coverage Results" MODIFIED="1558956178491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyMorphium$sendMessage.coverage" NAME="sendMessage Coverage Results" MODIFIED="1559025622623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyMorphium$MessagingMonitor.coverage" NAME="MessagingMonitor Coverage Results" MODIFIED="1556003878206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyMorphium" />
   </component>
   <component name="debuggerHistoryManager">
@@ -670,13 +704,23 @@
     <entry file="file://$PROJECT_DIR$/pyMorphium/MessagingMonitor.py">
       <provider selected="true" editor-type-id="live-pycharm">
         <state>
-          <first_editor relative-caret-position="2490">
+          <first_editor relative-caret-position="2565">
             <caret line="171" column="50" selection-start-line="167" selection-end-line="171" selection-end-column="50" />
             <folding>
               <element signature="e#0#31#0" expanded="true" />
             </folding>
           </first_editor>
-          <second_editor relative-caret-position="-75" />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/pymongo/__init__.py">
+      <provider selected="true" editor-type-id="live-pycharm">
+        <state>
+          <first_editor relative-caret-position="1245">
+            <caret line="97" column="22" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="22" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -729,24 +773,31 @@
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="live-pycharm">
         <state>
-          <first_editor relative-caret-position="390">
+          <first_editor relative-caret-position="435">
             <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
             <folding>
               <element signature="e#0#15#0" expanded="true" />
             </folding>
           </first_editor>
-          <second_editor relative-caret-position="-45" />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/pymongo/mongo_client.py">
+      <provider selected="true" editor-type-id="live-pycharm">
+        <state>
+          <first_editor relative-caret-position="459">
+            <caret line="243" column="42" selection-start-line="243" selection-start-column="32" selection-end-line="243" selection-end-column="42" />
+          </first_editor>
+          <second_editor relative-caret-position="-105" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sendMessage.py">
       <provider selected="true" editor-type-id="live-pycharm">
         <state>
-          <first_editor relative-caret-position="495">
-            <caret line="127" lean-forward="true" selection-start-line="127" selection-end-line="127" />
-            <folding>
-              <element signature="e#0#14#0" expanded="true" />
-            </folding>
+          <first_editor relative-caret-position="556">
+            <caret line="207" column="50" selection-start-line="207" selection-start-column="50" selection-end-line="207" selection-end-column="50" />
           </first_editor>
           <second_editor relative-caret-position="-105" />
         </state>
