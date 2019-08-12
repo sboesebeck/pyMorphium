@@ -82,21 +82,25 @@ def main(argv):
                 msg=""
                 if ("fullDocument" in insert_change):
                     fd=insert_change['fullDocument']
-                    msgId=str(fd['_id'])
-                    sender=fd['sender']
-                    name=fd['name']
-                    if ('msg' in fd):
-                       msg=fd['msg']
-                    if ('recipient' in fd):
-                       recipient=fd['recipient']
-                    if ('in_answer_to' in fd):
-                        if 'a' not in types:
-                            continue
-                        inAnswerTo=str(fd['in_answer_to'])
-                    if (fd['locked_by']=='ALL'):
-                        exclusive="false"
+                    if ( fd != None):
+                        if ('_id' in fd):
+                            msgId=str(fd['_id'])
+                        sender=fd['sender']
+                        name=fd['name']
+                        if ('msg' in fd):
+                           msg=fd['msg']
+                        if ('recipient' in fd):
+                           recipient=fd['recipient']
+                        if ('in_answer_to' in fd):
+                            if 'a' not in types:
+                                continue
+                            inAnswerTo=str(fd['in_answer_to'])
+                        if (fd['locked_by']=='ALL'):
+                            exclusive="false"
+                        else:
+                            exclusive="true"
                     else:
-                        exclusive="true"
+                        msgId="none"
                 if (insert_change['operationType']=='insert'):
                     if 'n' not in types:
                        continue
