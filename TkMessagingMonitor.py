@@ -268,6 +268,7 @@ def msgLoop():
         # The ChangeStream encountered an unrecoverable error or the
         # resume attempt failed to recreate the cursor.
         logging.error('error during processing',e)
+        client.close()
 
 _thread.start_new_thread(msgLoop,())
 
