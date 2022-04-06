@@ -20,10 +20,10 @@ class Messaging:
         # todo background thread
         #
 
-    def sendMessage(self, message):
-        1
+    def send(self, message):
+        self.__morphium.save(message)
 
-    def addListener(self, listener):
+    def add_listener(self, listener):
         self.listeners.append(listener)
 
     def msg_loop(self, dbname, collection):
@@ -85,4 +85,4 @@ class Messaging:
             logging.error('error during processing', e)
 
     def start(self):
-        _thread.start_new(self.msg_loop, (self.dbname, self.collection))
+        _thread.start_new_thread(self.msg_loop, (self.dbname, self.collection))
