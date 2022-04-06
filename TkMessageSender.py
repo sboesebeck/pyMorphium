@@ -1,16 +1,14 @@
-from Morphium import Morphium
-from Messaging import Messaging
-from mconfig import Config
 import sys
 
+from pyMorphium import Morphium, Messaging
 
 
 def main(args):
-    cfg = Config(["localhost:27017"])
+    cfg = Morphium.MConfig(host_seed=['localhost:27017'], database="test")
     cfg.replicaset = True
     cfg.database = "morphium_test"
-    morphium = Morphium(cfg)
-    msg=Messaging(morphium,cfg.database,"msg")
+    morphium = Morphium.Morphium(cfg)
+    msg = Messaging.Messaging(morphium, cfg.database, "msg")
     msg.addListener(on_message)
     msg.start()
 

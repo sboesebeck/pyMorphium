@@ -3,7 +3,7 @@ import logging
 
 import pymongo
 
-from Morphium import Morphium
+from pyMorphium import Morphium
 
 
 class Messaging:
@@ -11,7 +11,7 @@ class Messaging:
         if isinstance(morphium, Morphium.Morphium):
             print("morphium found")
         else:
-            raise Exception("not of type config")
+            raise Exception("not of type morphium")
         self.listeners = []
         self.__morphium = morphium
         self.dbname = dbname
