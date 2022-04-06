@@ -7,9 +7,9 @@ from pyMorphium import Morphium
 
 
 class Messaging:
-    def __init__(self, morphium, dbname, collection):
+    def __init__(self, morphium: Morphium.Morphium, dbname: str, collection: str):
         if isinstance(morphium, Morphium.Morphium):
-            print("morphium found")
+            print("morphium first parameter needs to be a Morphium instance")
         else:
             raise Exception("not of type morphium")
         self.listeners = []
@@ -79,7 +79,7 @@ class Messaging:
                     for listener in self.listeners:
                         listener(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerTo, fd)
 
-        except pymongo.errors.PyMongoError as e:
+        except pymongo.mongo_client.PyMongoError as e:
             # The ChangeStream encountered an unrecoverable error or the
             # resume attempt failed to recreate the cursor.
             logging.error('error during processing', e)
