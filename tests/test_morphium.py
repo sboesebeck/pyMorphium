@@ -1,7 +1,7 @@
 import unittest
 
-import Morphium
-from mconfig import Config
+from pyMorphium import Morphium
+
 
 class TestMorphium(unittest.TestCase):
     def test_constructor(self):
@@ -9,8 +9,8 @@ class TestMorphium(unittest.TestCase):
         Test constructor, should raise error, if cfg is not of type mconfig
         :return:
         """
-        cfg=Config(["localhost:27017"])
-        m=Morphium.Morphium(cfg)
+        cfg = Morphium.MConfig(["localhost:27017"])
+        m = Morphium.Morphium(cfg)
         # all ok here
         cfg=[]
         exception=False
@@ -21,8 +21,8 @@ class TestMorphium(unittest.TestCase):
         self.assertTrue(exception)
 
     def test_save(self):
-        cfg=Config(["localhost:27017"])
-        m=Morphium.Morphium(cfg)
+        cfg = Morphium.MConfig(["localhost:27017"])
+        m = Morphium.Morphium(cfg)
         tst=TestEntity("test",5)
         m.save(tst)
 

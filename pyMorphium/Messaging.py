@@ -1,12 +1,14 @@
-from Morphium import Morphium
-import logging
-import pymongo
 import _thread
+import logging
+
+import pymongo
+
+from Morphium import Morphium
 
 
 class Messaging:
     def __init__(self, morphium, dbname, collection):
-        if isinstance(morphium, Morphium):
+        if isinstance(morphium, Morphium.Morphium):
             print("morphium found")
         else:
             raise Exception("not of type config")
