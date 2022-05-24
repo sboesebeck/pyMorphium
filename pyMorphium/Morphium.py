@@ -5,6 +5,8 @@ from dataclasses import dataclass
 import jsonpickle
 import pymongo
 
+import Mconfig
+
 
 class Morphium:
     def __init__(self, config):

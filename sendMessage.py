@@ -1,13 +1,17 @@
+#!/usr/bin/env python3
+
 import _thread
 import getopt
 import logging
 import sys
+import json
 from datetime import datetime
 from time import time, sleep
 
 import pymongo
 from bson.objectid import ObjectId
 from pymongo import MongoClient
+from pathlib import Path
 
 # Defaults
 
@@ -18,7 +22,8 @@ global message
 global quiet
 global start
 global delete
-
+global checkFails
+global checksDir
 
 def main(argv):
     global message
@@ -28,6 +33,10 @@ def main(argv):
     global client
     global db
     global col
+    global checkFails
+    global checksDir
+    checksDir=""
+    checkFails=0
     msg = "ping"
     name = "ping"
     value = "value"
@@ -38,6 +47,7 @@ def main(argv):
     collection = "msg"
     waitTime = 5
     awaitNum = 1
+    ttl=30
     wait = True
     listeners = []
     client = None
@@ -47,23 +57,31 @@ def main(argv):
     listeners = []
     minAnswers = 0
     maxAnswers = 0
-    delete = False
-
+    exclusive = False
+    className="de.caluga.morphium.messaging.Msg"
+    global check
+    check=False
+    global checks
+    checks={}
+    global checkDir
     global answers
     global start
 
     try:
-        opts, args = getopt.getopt(argv, "?h:p:d:c:w:n:m:t:v:",
-                                   ["port=", "map=", "value=", "name=", "message=", "waittime=", "waitnum=", "host=",
-                                    "database=", "collection=", "dontwait", "quiet", "filter=", "minimum=", "maximum=", "delete"])
+        opts, args = getopt.getopt(argv, "?h:p:d:c:w:n:m:t:v:C:",
+                                   ["port=", "map=", "class=","value=", "name=", "message=", "waittime=", "waitnum=", "host=","ttl=",
+                                    "database=", "collection=", "dontwait", "quiet", "filter=", "minimum=", "maximum=", "exclusive",
+                                    "checksFile=","check=","help","checksDir="])
     except getopt.GetoptError as e:
         print(e)
-        print('MessagingMonitor.py -s|--stats -h|--host=<host> -d|database=<dbname> -c|collection=<collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
+        help()
         sys.exit(2)
     for opt, arg in opts:
-        if opt == '-?':
-            print('MessagingMonitor.py -h <host> -d <dbname> -c <collection> -p -a <ADDITIONAL Field> --filter=key:value --types=nlpda')
+        if opt in ('-?',"--help"):
+            help()
             sys.exit()
+        elif opt in ("-C", "--class"):
+            className=arg
         elif opt in ("-h", "--host"):
             host = arg
         elif opt in ("-d", "--dbname"):
@@ -82,6 +100,14 @@ def main(argv):
             value = arg
         elif opt in ("-p", "--port"):
             port = int(port)
+        elif opt == "--ttl":
+            ttl == arg
+        elif opt == "--exclusive":
+            if wait:
+                if awaitNum>1:
+                    print("exclusive messages cannot get more than one answer")
+                    awaitNum==1
+            exclusive=True
         elif opt == "--dontwait":
             wait = False
         elif opt == "--quiet":
@@ -95,6 +121,19 @@ def main(argv):
         elif opt == "--map":
             mv = arg.split(":")
             mapValue[mv[0]] = mv[1]
+        elif opt == "--checksFile":
+            file = open(arg, "r") 
+            for line in file: 
+                print("Got check line: ",)
+                checks.append(line)
+                check=True  
+            close(file)
+        elif opt== "--check":
+            checks.append(arg)
+            check=True
+        elif opt == "--checksDir":
+            checksDir=arg
+            check=True 
 
     listeners.append(on_message)
     client = MongoClient(host, port)
@@ -104,46 +143,122 @@ def main(argv):
     # msgLoop()
 
     _thread.start_new_thread(msg_loop, (col, listeners, dbname, collection))
-
-    message = {}
-    message["name"] = name
-    message["_id"] = ObjectId()
-    message["msg"] = msg
-    message["value"] = value
-    message["map_value"] = mapValue
-    message["locked_by"] = "ALL"
-    message["processed_by"] = []
-    message["ttl"] = 30000
-    message["sender"] = "python_cmd"
-    message["class_name"] = "de.genios.jef.commands.ping.PingMsg"
-    message["timestamp"] = int(time() * 1000)
-    message["delete_at"] = datetime.now().fromtimestamp(time() + 5 * 60)
-
     global start
     start = time()
-    col.insert_one(message)
-    answers[message["_id"]] = 0
-    # print("Waiting for answer to message ",message["_id"])
-    while wait:
-        if answers[message["_id"]] >= awaitNum or (time() - start) > waitTime:
-            break
-    client.close()
-    if not quiet:
-        sleep(1.0)
-        dur = time() - start
-        print("%d Answers took %f sec" % (answers[message["_id"]], dur))
-    if minAnswers > 0 and answers[message["_id"]] < minAnswers or 0 < maxAnswers < answers[message["_id"]]:
-        exit(1)
+
+
+    if checksDir:
+        print("Checking directory "+checksDir+" for checks")
+        rootdir=Path(checksDir)
+        file_list = [f for f in rootdir.glob('**/*') if f.is_file()]
+        totalFails=0
+        for f in file_list:
+            print("Processing file..."+str(f))
+            answers={}
+            checkFails=0 
+            content=f.read_text()
+            jsonDefinition=json.loads(content)
+
+            msg=jsonDefinition["message"]
+            msg["_id"]=ObjectId()
+            msg["processed_by"]=[]
+            if "ttl" not in jsonDefinition or jsonDefinition["ttl"]=="ARG":
+                msg["ttl"]=ttl
+            else: 
+                msg["ttl"]=int(jsonDefinition["ttl"])
+            msg["delete_at"] = datetime.now().fromtimestamp(time() + msg["ttl"]/1000)
+            msg["timestamp"] = int(time() * 1000)
+            if jsonDefinition["exclusive"]=="False":
+                msg["locked_by"]="ALL"
+            else:
+                msg["locked_by"]=None
+
+            msg["processed_by"]=[]
+            msg["sender"]="python_cmd"
+            msg["sender_host"]="localhost"
+            idx=1
+            checks=jsonDefinition["checks"]
+            col.insert_one(msg)
+            print("Message sent")
+            answers[msg["_id"]] = 0
+            minimum=minAnswers
+            endAfterMsgReceived=awaitNum
+            if jsonDefinition["minAnswers"]!="ARG":
+                minimum=int(jsonDefinition["minAnswers"])
+            maximum=maxAnswers
+            if jsonDefinition["maxAnswers"]!="ARG":
+                maximum=int(jsonDefinition["maxAnswers"])
+            if jsonDefinition["endAfterMsgReceived"]!="ARG":
+                endAfterMsgReceived=int(jsonDefinition["endAfterMsgReceived"])
+            print("Waiting for answers to message ",msg["_id"])
+            print("     min: "+str(minimum)+" answers, max "+str(maximum)+" will quit after timout "+str(waitTime)+" or "+str(endAfterMsgReceived)+" answers")
+            
+            while True:
+                if answers[msg["_id"]] >= endAfterMsgReceived or (time() - start) > waitTime:
+                   break 
+            if checkFails>0:
+                print(str(checkFails)+" cheks in file "+str(f)+" failed!")    
+                totalFails=totalFails+checkFails
+            if minimum > 0 and answers[msg["_id"]] < minimum or 0 < maximum < answers[msg["_id"]]:
+                print("ERROR: Number of answerwed messages is not between specified min and max")
+                print("Received "+str(answers[msg["_id"]])+" min: "+str(minimum) + " max: "+str(maximum))
+            print("... checks finished")
+        print("All check files processed!")
+        client.close()
+        if (totalFails>0):
+            print("ERROR: "+str(totalFails)+" tests failed")
+            exit(1)
+        else:
+            exit(0)
+                
+    else:
+        message = {}
+        message["name"] = name
+        message["_id"] = ObjectId()
+        message["msg"] = msg
+        message["value"] = value
+        message["map_value"] = mapValue
+        if exclusive:
+            message["locked_by"] = None
+        else:
+            message["locked_by"] = "ALL"
+        message["processed_by"] = []
+        message["ttl"] = ttl*1000
+        message["sender"] = "python_cmd"
+        message["class_name"] = className
+        message["timestamp"] = int(time() * 1000)
+        message["delete_at"] = datetime.now().fromtimestamp(time() + ttl)
+
+        col.insert_one(message)
+        answers[message["_id"]] = 0
+        print("Waiting for answer to message ",message["_id"])
+        while wait:
+            if answers[message["_id"]] >= awaitNum or (time() - start) > waitTime:
+                break
+        client.close()
+        if not quiet:
+            sleep(1.0)
+            dur = time() - start
+            print("%d Answers took %f sec" % (answers[message["_id"]], dur))
+        if minAnswers > 0 and answers[message["_id"]] < minAnswers or 0 < maxAnswers < answers[message["_id"]]:
+            print("ERROR: Number of answerwed messages is not between specified min and max")
+            print("Received "+answers[message["_id"]]+" min: "+minAnswers + " max: "+maxAnswers)
+            exit(1)
+        if checkFails>0:
+            print(str(checkFails)+" Checks failed!")
+            exit(1)
 
 
 def msg_loop(col, listeners, dbname, collection):
     global start
     global quiet
-    global message
+    global message 
+    global checkFails
+    print("Starting watch...")
     try:
         with col.watch([{'$match': {'ns.db': dbname, 'ns.coll': collection}}], 'updateLookup') as stream:
             for insert_change in stream:
-                # logging.info("incoming change...")
+                #logging.info("incoming change...")
                 name = ""
                 msgType = ""
                 msgId = ""
@@ -196,16 +311,40 @@ def msg_loop(col, listeners, dbname, collection):
         # resume attempt failed to recreate the cursor.
         logging.error('error during processing', e)
 
+def help():
+    print('sendMessage.py OPTIONS')
+    print(' Options are:')
+    print('  -? Shows this little help')
+    print('  -C|--class <NAME>: define the classname')
+    print('  -h|--host <NAME>: define the mongo host')
+    print('  -p|--port <NUM>: define the mongo port')
+    print('  -d|--dbname <DB>: define the mongo database')
+    print('  -c|--collection <name>: define the mongo collection')
+    print('  -w|--waittime <secs>: number of seconds to wait')
+    print('  -n|--waitnum <num>: number of answers to wait for. If the number is reached, program will exit')
+    print('  -m|--name <name>: name of the message')
+    print('  -t|--message <text>: value of the field msg')
+    print('  -v|--value <value>: value of the field value')
+    print('  --ttl <secs>: number of seconds after which this message should be deleted')
+    print('  --exclusive: if set, send an exclusive message')
+    print('  --dontwait: do not wait for answer')
+    print('  --minimum <num>: minimum number of answers to be expected.')
+    print('  --maximum <num>: maximum number of answers to be expected.')
+    print('  --maximum <num>: maximum number of answers to be expected.')
+    print('  --map FIELD:VALUE : define an entry for map value')
+    print('  --check <CHECK> : run the check in python interpreter for each message, e.g. --check "msg[\'name\']==\'ping\'", can be added several times')
+    print('  --checksFile <filename> : same as above, but all checks are stored in the file <filename>, one check per line')
+        
+
 
 def on_message(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswerTo, fd):
     # print("in listener", msgType)
     global start
     global delete
     global col
+    global checkFails
     if msgType == "new Message":
         if inAnswerTo is not None and inAnswerTo != '':
-            if delete:
-                col.delete_one({"_id": fd["_id"]})
             if not quiet and ObjectId(inAnswerTo) in answers:
                 print("Answer #%d to sent message after %f sec" % (answers[ObjectId(inAnswerTo)] + 1, (time() - start)))
                 print("  name        : " + name)
@@ -216,7 +355,20 @@ def on_message(msgType, name, msg, exclusive, msgId, sender, recipient, inAnswer
                 print("  sender_host : " + fd["sender_host"])
                 print()
                 answers[ObjectId(inAnswerTo)] = answers[ObjectId(inAnswerTo)] + 1
-
+                if check:
+                    print("Checking consistency...")
+                    for line in checks:
+                        try:
+                            result=eval(line,{"msg":fd})
+                            if result:
+                                print("line >"+line+"< check ok!")
+                            else:
+                                print("ERROR: Check >"+line+"< of msg with _id=ObjectId('"+str(fd["_id"])+"') failed!")
+                                checkFails=checkFails+1
+                        except Exception as ex:
+                            print(ex)
+                            print("ERROR: check of line >"+line+"< failed with error, _id=ObjectId('"+str(fd["_id"])+"')!")
+                            checkFails=checkFails+1
 
 if __name__ == "__main__":
     main(sys.argv[1:])
