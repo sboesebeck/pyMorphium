@@ -10,7 +10,7 @@ from time import time, sleep
 
 import pymongo
 from bson.objectid import ObjectId
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
 from pathlib import Path
 
 # Defaults
